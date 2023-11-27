@@ -7,11 +7,11 @@
     },
     "servers": [
         {
-            "url": "https://server2.csmit195.com/"
+            "url": "<baseURL>"
         }
     ],
     "paths": {
-        "/gptapi/addSeries": {
+        "/addSeries": {
             "post": {
                 "description": "Add a TV series to Sonarr for automatic searching and downloading",
                 "operationId": "addSeries",
@@ -79,7 +79,7 @@
                 }
             }
         },
-        "/gptapi/addMovies": {
+        "/addMovies": {
             "post": {
                 "description": "Add bulk/singular movies to Radarr for automatic searching and downloading",
                 "operationId": "addMovies",
@@ -147,7 +147,7 @@
                 }
             }
         },        
-        "/gptapi/BulkSearchForMovieAndSeries": {
+        "/BulkSearchForMovieAndSeries": {
             "get": {
                 "description": "Search for movies based on the title (NOT GENRE)",
                 "operationId": "bulkSearchForMovieAndSeries",

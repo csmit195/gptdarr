@@ -31,15 +31,13 @@ GPTDARR is an innovative tool designed to integrate ChatGPT's advanced capabilit
    ```
 
 ### Configuration
-1. Run the configuration script:
-   ```
-   node config.js
-   ```
-   This will generate a `.env` file for your environment variables.
-   
-   Alternatively, you can rename `.env.example` to `.env` and edit it manually.
+Run the configuration script:
+```
+node config.js
+```
+This will generate a `.env` file for your environment variables.
 
-2. Edit the `.env` file to include your Sonarr and Radarr API keys and other necessary configurations.
+Alternatively, you can rename `.env.example` to `.env` and edit it manually.
 
 ### Usage
 - For setting up the GPT, please follow the [GPT Setup Guide](GTP_SETUP.md).
@@ -47,6 +45,7 @@ GPTDARR is an innovative tool designed to integrate ChatGPT's advanced capabilit
   ```
   node app.js
   ```
+- You can use PM2 or Linux Services to create an auto startup for the script.
 - Follow the prompts to manage your Sonarr and Radarr libraries with the help of ChatGPT.
 
 ## Note
