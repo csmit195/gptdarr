@@ -40,15 +40,16 @@ Alternatively, you can rename `.env.example` to `.env` and edit it manually.
 
 ### Usage
 - For setting up the GPT, please follow the [GPT Setup Guide](GPT_SETUP.md).
+- Run `npm install` at least once in the folder before running `node index.js`.
 - Start the application:
   ```
   node app.js
   ```
 - You can use PM2 or Linux Services to create an auto startup for the script.
-- Follow the prompts to manage your Sonarr and Radarr libraries with the help of ChatGPT.
+- Its hosted on Port `8914`, you can either portforward that, or reverse proxy it and expose it that way.
 
 ## Note
-Currently, the tool does not support language profiles but allows setting quality profiles for downloads.
+Currently, the tool does not support language profiles but allows setting quality profiles for downloads. Please excuse the current state of config.js, I rushed that one for the release and if you'd like to recode / finish it, feel free, its in a working state right now, but its very ugly.
 
 ## Contributing
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for more information.
