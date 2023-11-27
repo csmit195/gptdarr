@@ -1,5 +1,5 @@
 import express from 'express';
-import sonarr from '../classes/sonarr.js';
+import sonarr from '../modules/sonarr.js';
 
 const router = express.Router();
 

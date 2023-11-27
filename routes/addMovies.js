@@ -1,5 +1,5 @@
 import express from 'express';
-import radarr from '../classes/radarr.js';
+import radarr from '../modules/radarr.js';
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 import express from 'express';
-import sonarr from '../classes/sonarr.js';
-import radarr from '../classes/radarr.js';
-import { cleanObject } from '../libary/Utils.js';
+import sonarr from '../modules/sonarr.js';
+import radarr from '../modules/radarr.js';
+import { cleanObject } from '../modules/utils.js';
 
 const router = express.Router();
 
