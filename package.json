@@ -1,0 +1,22 @@
+{
+  "name": "sonarrradarrproxyapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "pm2 start index.js --name GPTDARR",
+    "stop": "pm2 stop GPTDARR",
+    "restart": "pm2 restart GPTDARR"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "chalk": "^5.3.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "readline-sync": "^1.4.10",
+    "uuid": "^9.0.1"
+  }
+}
