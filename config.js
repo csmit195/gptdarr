@@ -62,7 +62,7 @@ const sonarrUrl = mergeUrls(ask(
 const sonarrApiKey = ask('Enter SONARR API Key', 'Your unique API key for Sonarr.', null, validateSonarrApiKey);
 
 //#region Sonarr Quality Profile
-const response = await fetch(`${sonarrUrl}/qualityprofile`, {
+const sonarrQResponse = await fetch(`${sonarrUrl}/qualityprofile`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -70,30 +70,30 @@ const response = await fetch(`${sonarrUrl}/qualityprofile`, {
     }
 });
 
-if (response.status == 401) {
+if (sonarrQResponse.status == 401) {
     console.log(chalk.red('Invalid API key, please try again.'));
     process.exit();
 }
 
-if (response.status != 200) {
+if (sonarrQResponse.status != 200) {
     console.log(chalk.red('Unexpected error occurred, please try again.'));
     process.exit();
 }
 
-const qualityProfiles = await response.json();
+const sonarrQualityProfiles = await sonarrQResponse.json();
 
-const qualityProfilesNames = qualityProfiles.map((profile, index) => {
+const sonarrQualityProfilesNames = sonarrQualityProfiles.map((profile, index) => {
     return `${index + 1}: ${profile.name}`;
 });
 
-const qualityProfileIndex = readlineSync.keyInSelect(qualityProfilesNames, 'Select a quality profile for your series:');
-const qualityProfileId = qualityProfiles[qualityProfileIndex].id;
-console.log(chalk.green(`Selected quality profile: ${qualityProfiles[qualityProfileIndex].name}`));
+const sonarrQualityProfileIndex = readlineSync.keyInSelect(sonarrQualityProfilesNames, 'Select a quality profile for your series:');
+const sonarrQualityProfileId = sonarrQualityProfiles[sonarrQualityProfileIndex].id;
+console.log(chalk.green(`Selected quality profile: ${sonarrQualityProfiles[sonarrQualityProfileIndex].name}`));
 //#endregion
 
 //#region Sonarr Language Profile
 // http://192.168.1.238:8989/sonarr/api/v3/languageprofile
-const languageProfilesResponse = await fetch(`${sonarrUrl}/languageprofile`, {
+const sonarrLanguageProfilesResponse = await fetch(`${sonarrUrl}/languageprofile`, {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -103,20 +103,20 @@ const languageProfilesResponse = await fetch(`${sonarrUrl}/languageprofile`, {
 
 // No need for API key validation here, it was already validated above
 
-if (languageProfilesResponse.status != 200) {
+if (sonarrLanguageProfilesResponse.status != 200) {
     console.log(chalk.red('Unexpected error occurred, please try again.'));
     process.exit();
 }
 
-const languageProfiles = await languageProfilesResponse.json();
+const sonarrLanguageProfiles = await sonarrLanguageProfilesResponse.json();
 
-const languageProfilesNames = languageProfiles.map((profile, index) => {
+const sonarrLanguageProfilesNames = sonarrLanguageProfiles.map((profile, index) => {
     return `${index + 1}: ${profile.name}`;
 });
 
-const languageProfileIndex = readlineSync.keyInSelect(languageProfilesNames, 'Select a language profile for your series:');
-const languageProfileId = languageProfiles[languageProfileIndex].id;
-console.log(chalk.green(`Selected language profile: ${languageProfiles[languageProfileIndex].name}`));
+const sonarrLlanguageProfileIndex = readlineSync.keyInSelect(sonarrLanguageProfilesNames, 'Select a language profile for your series:');
+const sonarrLanguageProfileId = sonarrLanguageProfiles[sonarrLlanguageProfileIndex].id;
+console.log(chalk.green(`Selected language profile: ${sonarrLanguageProfiles[sonarrLlanguageProfileIndex].name}`));
 
 //#endregion
 
@@ -131,11 +131,45 @@ const radarrUrl = mergeUrls(ask(
 ), 'api/v3');
 
 const radarrApiKey = ask('Enter RADARR API Key', 'Your unique API key for Radarr.', null, validateRadarrApiKey);
+
+// RADARR_FORCE_SEARCH_ON_EXISTING (search radarr if already existing, but not downloaded)
+const radarrForceSearchOnExisting = readlineSync.keyInYN('Force search for existing, but missing movies?') ? 'true' : 'false';
+
+// #region Radarr Quality Profile
+const radarrQResponse = await fetch(`${radarrUrl}/qualityprofile`, {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Api-key': radarrApiKey
+    }
+});
+
+if (radarrQResponse.status == 401) {
+    console.log(chalk.red('Invalid API key, please try again.'));
+    process.exit();
+}
+
+if (radarrQResponse.status != 200) {
+    console.log(chalk.red('Unexpected error occurred, please try again.'));
+    process.exit();
+}
+
+const radarrQualityProfiles = await radarrQResponse.json();
+const radarrQualityProfilesNames = radarrQualityProfiles.map((profile, index) => {
+    return `${index + 1}: ${profile.name}`;
+});
+const radarrQualityProfileIndex = readlineSync.keyInSelect(radarrQualityProfilesNames, 'Select a quality profile for your movies:');
+const radarrQualityProfileId = radarrQualityProfiles[radarrQualityProfileIndex].id;
+console.log(chalk.green(`Selected quality profile: ${radarrQualityProfiles[radarrQualityProfileIndex].name}`));
+// #endregion
+
+// How the hell do language profiles work for radarr, TODO: reverse engineer this soon
+
 //#endregion
 
 //#region Security
 console.log(chalk.yellow('Security Settings'));
-const onlyAllowOpenAI = readlineSync.keyInYN('Only allow OpenAI?') ? '1' : '0';
+const onlyAllowOpenAI = readlineSync.keyInYN('Only allow OpenAI?') ? 'true' : 'false';
 const proxyApiKey = uuidv4();
 //#endregion
 
@@ -144,12 +178,15 @@ const proxyApiKey = uuidv4();
 const envContent = `
 [SONARR]
 SONARR_URL=${sonarrUrl}
-SONARR_QUALITY_PROFILE_ID=${qualityProfileId}
+SONARR_QUALITY_PROFILE_ID=${sonarrQualityProfileId}
+SONARR_LANGUAGE_PROFILE_ID=${sonarrLanguageProfileId}
 SONARR_API_KEY=${sonarrApiKey}
 
 [RADARR]
 RADARR_URL=${radarrUrl}
 RADARR_API_KEY=${radarrApiKey}
+RADARR_QUALITY_PROFILE_ID=${radarrQualityProfileId}
+RADARR_FORCE_SEARCH_ON_EXISTING=${radarrForceSearchOnExisting}
 
 [SECURITY]
 ONLY_ALLOW_OPENAI=${onlyAllowOpenAI}

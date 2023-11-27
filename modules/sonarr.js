@@ -22,20 +22,7 @@ class Sonarr {
                 return this.generateResponseStructure(false, 'No results found', seriesName, seriesYear);
             }
     
-            const request = {
-                ...lookup[0],
-                languageProfileId: 1,
-                qualityProfileId: 3,
-                path: `/mnt/TV_Shows/${lookup[0].folder}`,
-                seasonFolder: true,
-                monitored: true,
-                minimumAvailability: 'released',
-                addOptions: {
-                    monitor: "missing",
-                    searchForCutoffUnmetEpisodes: false,
-                    searchForMissingEpisodes: true
-                }
-            };
+            const request = this.buildRequestObject(lookup[0]);
     
             if (typeof request.id !== 'undefined') {
                 return this.generateResponseStructure(false, 'Series already exists', request.title, request.year, request.imdbId, request.tmdbId);
@@ -57,12 +44,6 @@ class Sonarr {
     }
 
     async bulkAdd(seriesList) {
-        // let results = [];
-        // for ( const series of seriesList ) {
-        //     const result = await this.add(series.seriesName, series.seriesYear);
-        //     results.push(result);
-        // }
-        // rewrite as a .map() (do not use promise.all())
         const results = seriesList.map(async (series) => {
             const result = await this.add(series.seriesName, series.seriesYear);
             return result;
@@ -80,6 +61,23 @@ class Sonarr {
             imdbId,
             tmdbId,
             errors
+        };
+    }
+
+    buildRequestObject(lookupResult) {
+        return {
+            ...lookupResult,
+            languageProfileId: process.env.SONARR_LANGUAGE_PROFILE_ID,
+            qualityProfileId: process.env.SONARR_QUALITY_PROFILE_ID,
+            path: `/mnt/TV_Shows/${lookupResult.folder}`,
+            seasonFolder: true,
+            monitored: true,
+            minimumAvailability: 'released',
+            addOptions: {
+                monitor: "missing",
+                searchForCutoffUnmetEpisodes: false,
+                searchForMissingEpisodes: true
+            }
         };
     }
     

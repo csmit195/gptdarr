@@ -90,8 +90,8 @@ class Radarr {
     buildRequestObject(lookupResult) {
         return {
             ...lookupResult,
-            qualityProfileId: 3,
-            profileId: 3,
+            qualityProfileId: process.env.RADARR_QUALITY_PROFILE_ID,
+            profileId: process.env.RADARR_QUALITY_PROFILE_ID,
             path: `/mnt/Movies/${lookupResult.folder}`,
             monitored: true,
             minimumAvailability: 'released',

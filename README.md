@@ -42,6 +42,7 @@ GPTDARR is an innovative tool designed to integrate ChatGPT's advanced capabilit
 2. Edit the `.env` file to include your Sonarr and Radarr API keys and other necessary configurations.
 
 ### Usage
+- For setting up the GPT, please follow the [GPT Setup Guide](GTP_SETUP.md).
 - Start the application:
   ```
   node app.js
