@@ -7,7 +7,6 @@ GPTDARR is an innovative tool designed to integrate ChatGPT's advanced capabilit
 - Easy integration with Sonarr and Radarr
 - AI-driven insights for media management
 - Automated addition and tracking of TV shows and movies
-- Simplified user interface for media library management
 
 ## Getting Started
 
@@ -40,7 +39,7 @@ This will generate a `.env` file for your environment variables.
 Alternatively, you can rename `.env.example` to `.env` and edit it manually.
 
 ### Usage
-- For setting up the GPT, please follow the [GPT Setup Guide](GTP_SETUP.md).
+- For setting up the GPT, please follow the [GPT Setup Guide](GPT_SETUP.md).
 - Start the application:
   ```
   node app.js
