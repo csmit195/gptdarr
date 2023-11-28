@@ -8,6 +8,12 @@ GPTDARR is an innovative tool designed to integrate ChatGPT's advanced capabilit
 - AI-driven insights for media management
 - Automated addition and tracking of TV shows and movies
 
+## Example Chats
+- [All Jason Stathham Action Movies (Bing + GPTDARR)](https://chat.openai.com/share/b62dfc8d-04a1-4eb6-bdef-9729ca3be892)
+- [All Mazerunner Movies](https://chat.openai.com/share/bb2c80b0-f837-41b8-b405-d18d1c404e84)
+
+![Screenshot of all Willy Wonker Movies being grabbed](screenshots/screenshot.png)
+
 ## Getting Started
 
 ### Prerequisites
