@@ -1,6 +1,6 @@
 {
   "name": "gptdarr",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A CLI tool for managing Sonarr and Radarr using GPT",
   "main": "src/index.js",
   "type": "module",
