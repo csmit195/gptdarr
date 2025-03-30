@@ -47,6 +47,11 @@ GPTDARR is an AI tool server using Model Context Protocol (MCP) that integrates 
    - Paste the copied command
    - The chat client will now be able to start and communicate with the GPTDarr MCP server
 
+5. **Important: System Prompt**
+   - After setting up the tool, make sure to use the provided system prompt located in [`llm_system_prompt.txt`](llm_system_prompt.txt)
+   - This prompt contains essential instructions for the AI assistant to properly interact with Radarr and Sonarr
+   - The prompt ensures consistent handling of movie and TV show requests, proper status reporting, and efficient content management
+
 The server provides the following tools:
 - **lookup-content**: Search for TV shows and movies
   - Parameters:
