@@ -13,12 +13,15 @@ GPTDARR is an AI tool server using Model Context Protocol (MCP) that integrates 
 - Works best with movies; TV show support is more limited
 - Does not support individual season and episode file checks
 - Monitoring toggles are not implemented (unmonitored items are ignored)
+- Prone to hallucinating tool-usage, make sure it runs the tool.
 
 ## Todo
 - [ ] Implement individual season and episode file checks
 - [ ] Add support for toggling monitoring status
 - [ ] Improve TV show support to match movie functionality
 - [ ] Override quality profile through natural language
+- [ ] Improve tool naming and descriptions so the LLM doesn't hallucinate tool calls (looking for expert advice here)
+- [ ] Improve LLM system prompt to reduce hallucinations (looking for expert advice here too)
 
 ## Getting Started
 
