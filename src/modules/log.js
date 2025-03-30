@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { config } from '../config/config.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const homePath = process.env.HOME || process.env.USERPROFILE; // HOME for Unix/Linux, USERPROFILE for Windows
@@ -13,8 +14,6 @@ try {
     console.error('Failed to create log directory:', error);
 }
 
-const ENABLE_LOGGING = process.env.ENABLE_LOGGING === 'true';
-
 // Create logger function
 const logger = {
   /**
@@ -25,7 +24,7 @@ const logger = {
    * @param {boolean} success - Whether the operation was successful
    */
   log(type, service, data, success = true) {
-    if (!ENABLE_LOGGING) return;
+    if (!config.get(['logging', 'enabled'])) return;
 
     const timestamp = new Date().toISOString();
     const logEntry = {
@@ -48,7 +47,7 @@ const logger = {
   },
 
   raw(data) {
-    if (!ENABLE_LOGGING) return;
+    if (!config.get(['logging', 'enabled'])) return;
     
     const timestamp = new Date().toISOString();
     const logEntry = {
