@@ -30,9 +30,7 @@ const originalStderr = process.stderr.write;
 
 // Override stdout
 process.stdout.write = function(chunk, encoding, callback) {
-    // Write to original stdout
     originalStdout.call(this, chunk, encoding, callback);
-    // Write to log file
     logStream.write(chunk);
 };
 
@@ -51,7 +49,7 @@ async function registerTools() {
     
     try {
         const files = await readdir(toolsDir);
-        const toolFiles = files.filter(file => file.endsWith('.js') && file !== 'index.js');
+        const toolFiles = files.filter(file => file.endsWith('.js') && file !== 'index.js' && !file.endsWith('.disabled.js'));
         
         // Import and register each tool
         await Promise.all(toolFiles.map(async file => {
@@ -60,7 +58,8 @@ async function registerTools() {
             
             try {
                 const { schema, handler } = await import(toolPath);
-                server.tool(toolName, handler, schema);
+                logger.raw(schema);
+                server.tool(toolName, schema, handler);
                 logger.log('info', 'mcp', { message: `Registered tool: ${toolName}` });
             } catch (error) {
                 logger.error('mcp', `Failed to register tool ${toolName}`, error);
