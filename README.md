@@ -1,61 +1,78 @@
-# GPTDARR
+# GPTDARR - Sonarr & Radarr MCP Server
 
 ## Description
-GPTDARR is an innovative tool designed to integrate ChatGPT's advanced capabilities with Sonarr and Radarr. It assists in adding, monitoring, and obtaining detailed information about TV shows and movies, streamlining your media management experience.
+GPTDARR is an AI tool server using Model Context Protocol (MCP) that integrates with Sonarr and Radarr. It helps AI assistants search, add, and manage TV shows and movies in your media library.
 
 ## Features
-- Easy integration with Sonarr and Radarr
-- AI-driven insights for media management
-- Automated addition and tracking of TV shows and movies
+- Search for TV shows and movies across Sonarr and Radarr
+- Add TV series to Sonarr
+- Add movies to Radarr
+- Comprehensive logging system for debugging and monitoring (sorry about the litter, this is very much a work in progress application)
 
-## Example Chats
-- [All Jason Stathham Action Movies (Bing + GPTDARR)](https://chat.openai.com/share/b62dfc8d-04a1-4eb6-bdef-9729ca3be892)
-- [All Mazerunner Movies](https://chat.openai.com/share/bb2c80b0-f837-41b8-b405-d18d1c404e84)
+## Current Limitations
+- Works best with movies; TV show support is more limited
+- Does not support individual season and episode file checks
+- Monitoring toggles are not implemented (unmonitored items are ignored)
 
-![Screenshot of all Willy Wonker Movies being grabbed](screenshots/screenshot.png)
+## Todo
+- [ ] Implement individual season and episode file checks
+- [ ] Add support for toggling monitoring status
+- [ ] Improve TV show support to match movie functionality
+- [ ] Override quality profile through natural language
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js
+- Node.js 18 or higher
 - Sonarr and Radarr set up and running
-- Basic knowledge of .env configurations
+- An MCP-compatible chat client (e.g., 5ire, Claude)
 
-### Installation
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/GPTDARR.git
-   ```
-2. Navigate to the cloned directory:
-   ```
-   cd GPTDARR
-   ```
-3. Install dependencies:
-   ```
-   npm install
+### Installation & Setup
+1. Run the interactive configuration wizard:
+   ```bash
+   npx gptdarr setup
    ```
 
-### Configuration
-Run the configuration script:
-```
-node config.js
-```
-This will generate a `.env` file for your environment variables.
+2. The wizard will guide you through setting up:
+   - Sonarr URL and API key
+   - Radarr URL and API key
+   - Quality profiles for both services
+   - Root folders for media storage
+   - Logging preferences
 
-Alternatively, you can rename `.env.example` to `.env` and edit it manually.
+3. After completing the setup, the wizard will generate an NPX command (recommended). Copy this command.
 
-### Usage
-- For setting up the GPT, please follow the [GPT Setup Guide](GPT_SETUP.md).
-- Run `npm install` at least once in the folder before running `node index.js`.
-- Start the application:
-  ```
-  node app.js
-  ```
-- You can use PM2 or Linux Services to create an auto startup for the script.
-- Its hosted on Port `8914`, you can either portforward that, or reverse proxy it and expose it that way.
+4. In your MCP-compatible chat client (e.g., 5ire):
+   - Go to Tools > New > Command
+   - Paste the copied command
+   - The chat client will now be able to start and communicate with the GPTDarr MCP server
 
-## Note
-Currently, the tool does not support language profiles but allows setting quality profiles for downloads. Please excuse the current state of config.js, I rushed that one for the release and if you'd like to recode / finish it, feel free, its in a working state right now, but its very ugly.
+The server provides the following tools:
+- **lookup-content**: Search for TV shows and movies
+  - Parameters:
+    - `title`: The title to search for
+    - `year` (optional): Release year to refine search
+  
+- **add-series**: Add TV series to Sonarr
+  - Parameters:
+    - `items`: List of TV series to add, each with:
+      - `seriesName`: Name of the TV series
+      - `seriesYear` (optional): Year of the TV series
+  
+- **add-movies**: Add movies to Radarr
+  - Parameters:
+    - `items`: List of movies to add, each with:
+      - `title`: Title of the movie
+      - `year` (optional): Year of the movie
+
+### Logging
+The logs are mostly for development, and we suggest disabling them when running setup.
+- Content lookups
+- Series and movie additions
+- API requests and responses
+- Errors and exceptions
+
+Logs are stored in your home directory in a `.gptdarr` folder.
 
 ## Contributing
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for more information.
