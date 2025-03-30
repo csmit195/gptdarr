@@ -160,7 +160,35 @@ class Config {
   }
 
   toMCPFormat() {
-    return JSON.stringify(this.config, null, 2);
+    const args = [];
+    for (const [envKey, path] of Object.entries(ENV_MAPPING)) {
+      const value = this.get(path);
+      if (value !== undefined && value !== '') {
+        const key = envKey.toLowerCase();
+        let formattedValue = value;
+
+        // Handle different value types
+        if (typeof value === 'string') {
+          // Quote string values, especially if they contain spaces or special characters
+          if (value.includes(' ') || value.includes('\\') || value.includes('"')) {
+            formattedValue = `"${value.replace(/"/g, '\\"')}"`;
+          }
+        } else if (typeof value === 'boolean') {
+          formattedValue = value.toString();
+        }
+
+        args.push(`--${key}=${formattedValue}`);
+      }
+    }
+
+    return JSON.stringify({
+      mcpServers: {
+        gptdarr: {
+          command: "npx gptdarr",
+          args: args
+        }
+      }
+    }, null, 2);
   }
 }
 

@@ -318,6 +318,7 @@ export async function generateConfig() {
         printSeparator();
         
         console.log(chalk.cyan('3. MCP Format:'));
+        console.log(chalk.yellow('* Unable to test this due to a bug on Windows, I highly suggest using 5ire instead of Claude Desktop for now.'));
         console.log(chalk.yellow(config.toMCPFormat()));
         printSeparator();
 
