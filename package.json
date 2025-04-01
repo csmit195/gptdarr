@@ -1,7 +1,7 @@
 {
   "name": "gptdarr",
   "version": "2.0.3",
-  "description": "A CLI tool for managing Sonarr and Radarr using GPT",
+  "description": "MCP server for managing Sonarr and Radarr",
   "main": "src/index.js",
   "type": "module",
   "bin": {
